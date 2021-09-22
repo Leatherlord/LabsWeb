@@ -35,10 +35,16 @@ if (empty($R)) {
 }
 
 for ($i = 0; $i <= count($R)-1; $i++) {
-    if ( trim($R[$i]) !== "" and is_numeric($R[$i]) and ((float)($R[$i]) == 1 or (float)($R[$i]) == 1.5 or (float)($R[$i]) == 2 or (float)($R[$i]) == 2.5 or (float)($R[$i]) == 3)) {
+    if ( trim($R[$i]) !== "" and ((float)($R[$i]) == 1 or (float)($R[$i]) == 1.5 or (float)($R[$i]) == 2 or (float)($R[$i]) == 2.5 or (float)($R[$i]) == 3)) {
         $RIsNotSet = false;
     }
 }
+for ($i = 0; $i <= count($R)-1; $i++) {
+    if (!is_numeric($R[$i])) {
+        $RIsNotSet = true;
+    }
+}
+
 
 //if (isset($_GET['R1']) and trim($_GET['R1']) !== "" and (float)($_GET['R1']) == 1) {
 //    $R[1] = (float)$_GET['R1'];
@@ -89,10 +95,13 @@ for ($i = 0; $i <= count($R)-1; $i++) {
 //    echo $X . " " . $Y . " " . -$R[$i] . " " . (pow($Y, 2) + pow($X, 2));
     if ($X < -$R[$i] / 2 or $X > $R[$i]) {
         $state = false;
-    } else if (($X <= 0 and $Y < -$R[$i]) or ($X <= 0 and ((pow($Y, 2) + pow($X, 2)) > $R[$i] / 2))) {
+
+    } else if (($X <= 0 and $Y < -$R[$i]) or ($X <= 0 and $Y >=0 and ((pow($Y, 2) + pow($X, 2)) > pow(($R[$i] / 2), 2)))) {
         $state = false;
+
     } else if ($X > 0 and ($Y > 0 or $Y < ($X / 2 - $R[$i] / 2))) {
         $state = false;
+
     }
 
     if ($state) {

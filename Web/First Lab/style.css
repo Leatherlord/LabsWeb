@@ -98,7 +98,10 @@ h1:first-letter {
 }
 
 #content-separator {
-    height: 250px;
+    /*position: absolute;*/
+    /*top: 64px;*/
+    /*left: 300px;*/
+    min-height: calc(100vh - 525px);
 }
 
 #content {
@@ -116,11 +119,14 @@ h1:first-letter {
     margin-top: 50px;
     margin-left: 200px;
     height: 400px;
+    /*height: 60%;*/
     width: 700px;
+    /*width: 56%;*/
     background-color: white;
     border-radius: 10px;
     border: 6px groove #1e51a4;
     background-image: url("blue_square_n_area_background.png");
+    background-size: cover;
 }
 
 .clear {
