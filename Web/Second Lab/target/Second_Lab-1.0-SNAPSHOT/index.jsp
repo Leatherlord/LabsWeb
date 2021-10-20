@@ -77,6 +77,7 @@
                 <img id="zone" src="red_field.png">
                 <img id="pointer" src="gray-black_square_cut-removebg-preview(1).png">
             </div>
+
         </div>
     </div>
     <div class="clear">

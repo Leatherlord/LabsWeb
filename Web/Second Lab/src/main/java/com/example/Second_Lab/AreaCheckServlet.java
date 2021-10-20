@@ -1,6 +1,7 @@
 package com.example.Second_Lab;
 
 import java.io.*;
+import java.util.Date;
 import java.util.LinkedList;
 import javax.servlet.http.*;
 import javax.servlet.annotation.*;
@@ -34,7 +35,8 @@ public class AreaCheckServlet extends HttpServlet {
                                 isInArea(Double.parseDouble(i),
                                         Double.parseDouble(Y),
                                         Double.parseDouble(R)
-                                )
+                                ),
+                                new Date()
                         )
                 );
         }

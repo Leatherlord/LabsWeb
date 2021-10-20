@@ -181,6 +181,7 @@ th, td {
     width: 30px;
     left: 134px;
     top: 368px;
+    z-index: 100;
 }
 
 #zone {
