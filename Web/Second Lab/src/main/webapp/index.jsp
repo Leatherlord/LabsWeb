@@ -67,7 +67,15 @@
             </div>
             <div id="content-separator"></div>
             <div id="ajax">
-                <table id="the-only-table"><tr><td>X</td><td>Y</td><td>R</td><td>Result</td><td>Date</td></tr></table>
+                <table id="the-only-table">
+                    <tr>
+                        <td>X</td>
+                        <td>Y</td>
+                        <td>R</td>
+                        <td>Result</td>
+                        <td>Date</td>
+                    </tr>
+                </table>
             </div>
         </div>
 
@@ -83,6 +91,6 @@
     <div class="clear">
     </div>
 </div>
-<script src="validation.js" type="text/javascript"></script>
+<script src="script.js" type="text/javascript"></script>
 </body>
 </html>

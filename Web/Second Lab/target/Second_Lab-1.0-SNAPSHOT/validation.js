@@ -72,25 +72,24 @@ document.querySelector("#field").onclick = function (e) {
 
 document.querySelector(".button").onclick = function (e) {
     e.preventDefault()
-     if (!isChecked(checkboxes)) {
+    if (!isChecked(checkboxes)) {
         notValid(span, "Выберите хотя бы один X")
     } else if (!isNumber(input.value) || Math.abs(+input.value) > 5 || input.value === "") {
         notValid(span, "Введите число от -5 до 5")
     } else {
         valid(span, "")
-         // table.innerHTML = "<tr><td>X</td><td>Y</td><td>R</td><td>Result</td><td>Date</td></tr>"
-         let formData = new FormData(form)
-         formData.set("ONLOAD", "false")
+        // table.innerHTML = "<tr><td>X</td><td>Y</td><td>R</td><td>Result</td><td>Date</td></tr>"
+        let formData = new FormData(form)
+        formData.set("ONLOAD", "false")
         sendRequest("POST", "controller-servlet", formData)
             .then(addRow)
             .catch(err => console.log(err));
-     }
+    }
 }
 
 function addRow(data) {
-    if (data[0].result.toString() !== ("none")) {
+    if (data[0].result.toString() !== ("none") && data[0].state.toString() !== ("true")) {
         for (let i = 0; i < data.length; i++) {
-            // console.log(data[i])
             let row = table.insertRow();
             let cell = row.insertCell(0)
             let text = document.createTextNode(data[i].x)
@@ -109,7 +108,10 @@ function addRow(data) {
             // let date = new Date()
             // text = document.createTextNode(date.getDate() + "." + date.getMonth() + "." + date.getFullYear() + " " + date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds())
             cell.appendChild(text);
+            valid(span, "")
         }
+    } else {
+        notValid(span, data[0].message)
     }
 }
 function sendRequest(method, url, data = new FormData(form)) {
@@ -117,15 +119,7 @@ function sendRequest(method, url, data = new FormData(form)) {
         method: method,
         body: data
     }).then(response => {
-        let resp = response.clone()
-        // console.log(resp.text())
-        let json = response.json().catch(e => {
-            console.log(resp.text())
-            let obj = new Object()
-            obj.result = "none"
-            return [obj]
-        })
-        return json
+        return response.json()
     })
 }
 

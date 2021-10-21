@@ -1,10 +1,14 @@
 package com.example.Second_Lab;
 
-import java.io.*;
+import javax.servlet.annotation.MultipartConfig;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.Date;
-import java.util.LinkedList;
-import javax.servlet.http.*;
-import javax.servlet.annotation.*;
 
 @MultipartConfig
 @WebServlet(name = "areaCheckServlet", value = "/area-check-servlet")
@@ -24,53 +28,32 @@ public class AreaCheckServlet extends HttpServlet {
 
         PrintWriter out = resp.getWriter();
 
-        LinkedList<Lane> collection = (LinkedList<Lane>) this.getServletContext().getAttribute("Collection");
+        ArrayList<Lane> collection = (ArrayList<Lane>) this.getServletContext().getAttribute("Collection");
+        ArrayList<Lane> list = new ArrayList<>();
+        for (String i : X) {
+            Lane lane = new Lane(
+                    Double.parseDouble(i),
+                    Double.parseDouble(Y),
+                    Double.parseDouble(R),
+                    isInArea(Double.parseDouble(i),
+                            Double.parseDouble(Y),
+                            Double.parseDouble(R)
+                    ),
+                    new Date(),
+                    false,
+                    ""
+            );
 
-        for (String i: X) {
-                collection.add(
-                        new Lane(
-                                Double.parseDouble(i),
-                                Double.parseDouble(Y),
-                                Double.parseDouble(R),
-                                isInArea(Double.parseDouble(i),
-                                        Double.parseDouble(Y),
-                                        Double.parseDouble(R)
-                                ),
-                                new Date()
-                        )
-                );
+            collection.add(lane);
+            list.add(lane);
         }
 
-//        out.println("<html><body>");
-//        out.println("<table border='2'><tr><td>X</td><td>Y</td><td>R</td><td>Result</td></tr>");
-        out.println("[");
-
-        for (int i = collection.size() - X.length; i < collection.size(); i++) {
-            if (i != collection.size()-1) {
-                out.println(collection.get(i) + ",");
-            } else {
-                out.println(collection.get(i));
-            }
-
-        }
-
-//        for (Lane i : collection) {
-////            echo "<tr><td>".$stats[0]."</td><td>".$stats[1]."</td><td>".$stats[2]."</td><td>".$stats[3]."</td><td>".$stats[4].$stats[5]."</td></tr>\n";
-////            out.println("<tr><td>" + i.getX() + "</td><td>" + i.getY() + "</td><td>" + i.getR() + "</td><td>" + i.isInArea() + "</td></tr>");
-//            out.println(i + ",");
-//        }
-        out.println("]");
-
-//        out.println("</body></html>");
-
+        out.println(JSONParser.toJSON(list));
 
     }
 
     private boolean isInArea(double x, double y, double r) {
-        if (x < -r || y > r / 2 || (x > 0 && y > 0) || y < x - r/2 || ((x*x + y*y > (r/2)*(r/2)) && (x < 0 && y < 0) )) {
-            return false;
-        }
-        return true;
+        return !(x < -r) && !(y > r / 2) && (!(x > 0) || !(y > 0)) && !(y < x - r / 2) && ((!(x * x + y * y > (r / 2) * (r / 2))) || (!(x < 0) || !(y < 0)));
     }
 
 

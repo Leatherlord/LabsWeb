@@ -8,19 +8,19 @@ public class Lane {
     final private double r;
     final private boolean isInArea;
     final private Date creationDate;
-    private int identifier = 0;
+    final private boolean isError;
+    final private String message;
 
-    public Lane(double x, double y, double r, boolean isInArea, Date creationDate) {
+    public Lane(double x, double y, double r, boolean isInArea, Date creationDate, boolean isError, String message) {
         this.x = x;
         this.y = y;
         this.r = r;
         this.isInArea = isInArea;
         this.creationDate = creationDate;
+        this.isError = isError;
+        this.message = message;
     }
 
-    public void setIdentifier(int identifier) {
-        this.identifier = identifier;
-    }
 
     public boolean isInArea() {
         return isInArea;
@@ -44,14 +44,11 @@ public class Lane {
         return creationDate;
     }
 
-    @Override
-    public String toString() {
-        return "    {\n" +
-                "       \"x\": \"" + getX() + "\",\n" +
-                "       \"y\": \"" + getY() + "\",\n" +
-                "       \"r\": \"" + getR() + "\",\n" +
-                "       \"result\": \"" + isInArea() + "\",\n" +
-                "       \"date\": \"" + getCreationDate() + "\"\n" +
-                "   }";
+    public boolean isError() {
+        return isError;
+    }
+
+    public String getMessage() {
+        return message;
     }
 }
