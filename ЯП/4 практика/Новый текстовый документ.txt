@@ -1,0 +1,35 @@
+parse_uint:
+    
+    
+    mov r9, 10
+    xor rdx, rdx
+    xor rax, rax
+    jmp .A
+    
+  .A:
+    .check_less:
+    cmp byte[rdi], 48
+    jge .check_greater
+    jmp .B
+    
+    .check_greater:
+    cmp byte[rdi], 57
+    jle .parse
+    jmp .B
+    
+    .parse:
+    push rdx
+    mul r9
+    pop rdx
+    mov r10, [rdi]
+    push 0
+    mov [rsp], r10b
+    pop r10
+    add rax, r10
+    sub rax, 48
+    inc rdx
+    inc rdi
+    jmp .check_less
+    
+  .B:
+    ret
