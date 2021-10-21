@@ -29,13 +29,13 @@ public class ControllerServlet extends HttpServlet {
 
             PrintWriter out = response.getWriter();
 
-            out.println("<html><body>");
+//            out.println("<html><body>");
 
 
             if (X == null) {
                 message = "No X parameter set";
-                out.println("<h1>" + message + "</h1>");
-                out.println("</body></html>");
+                out.println(message);
+//                out.println("</body></html>");
                 return;
             }
 
@@ -44,8 +44,8 @@ public class ControllerServlet extends HttpServlet {
                     Double.parseDouble(i);
                 } catch (NumberFormatException e) {
                     message = "Not a number in X!";
-                    out.println("<h1>" + message + "</h1>");
-                    out.println("</body></html>");
+                    out.println(message);
+//                    out.println("</body></html>");
                     return;
                 }
             }
@@ -54,8 +54,8 @@ public class ControllerServlet extends HttpServlet {
                 Double.parseDouble(Y);
             } catch (NumberFormatException e) {
                 message = "Not a number in Y!";
-                out.println("<h1>" + message + "</h1>");
-                out.println("</body></html>");
+                out.println(message);
+//                out.println("</body></html>");
                 return;
             }
 
@@ -63,14 +63,14 @@ public class ControllerServlet extends HttpServlet {
                 Double.parseDouble(R);
             } catch (NumberFormatException e) {
                 message = "Not a number in R!";
-                out.println("<h1>" + message + "</h1>");
-                out.println("</body></html>");
+                out.println(message);
+//                out.println("</body></html>");
                 return;
             }
 
             message = "Controller ready!";
-            out.println("<h1>" + message + "</h1>");
-            out.println("</body></html>");
+//            out.println(message);
+//            out.println("</body></html>");
 
             RequestDispatcher requestDispatcher = request.getRequestDispatcher("/area-check-servlet");
             requestDispatcher.forward(request, response);

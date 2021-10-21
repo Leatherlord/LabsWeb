@@ -117,8 +117,15 @@ function sendRequest(method, url, data = new FormData(form)) {
         method: method,
         body: data
     }).then(response => {
-        // console.log(response)
-        return response.json()
+        let resp = response.clone()
+        // console.log(resp.text())
+        let json = response.json().catch(e => {
+            console.log(resp.text())
+            let obj = new Object()
+            obj.result = "none"
+            return [obj]
+        })
+        return json
     })
 }
 
