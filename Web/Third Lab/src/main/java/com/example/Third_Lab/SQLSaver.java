@@ -1,35 +1,34 @@
 package com.example.Third_Lab;
 
 
-import java.sql.Connection;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.ArrayList;
 
 public class SQLSaver {
 
-    private static final String url = "jdbc:postgresql://localhost:5432/postgres";
-    private static final String user = "postgres";
-    private static final String password = "vb484732";
+//    private static final String url = "secret";
+//    private static final String user = "secret";
+//    private static final String password = "secret";
 
-//    private static final String url = "jdbc:postgresql://pg/studs";
-//    private static final String user = "s312421";
-//    private static final String password = "sdn516";
+    private static final String url = "secret";
+    private static final String user = "secret";
+    private static final String password = "secret";
 
     public void sqlWrite(ArrayList<PointBean> points) {
 
-        try {
-            Connection connection = new SQLConnector().connect(url, user, password);
-            Statement stmt = connection.createStatement();
+        try (Connection con = new SQLConnector().connect(url, user, password);
+             Statement stmt = con.createStatement();
+             ) {
 
             for (PointBean i : points) {
-                stmt.executeUpdate("INSERT INTO points (x, y, r, Result, Date)" +
-                                " VALUES (" +
-                                i.getX() + "', " +
-                                i.getY() + "', " +
-                                i.getR() + ", '" +
-                                i.getResult() + "', '" +
-                                i.getDate() + "')");
+                PreparedStatement statement = con.prepareStatement("insert into points values (?, ?, ?, ?, ?);");
+                statement.setDouble(1, i.getX());
+                statement.setDouble(2, i.getY());
+                statement.setDouble(3, i.getR());
+                statement.setBoolean(4, i.getResult());
+                statement.setTimestamp(5, i.getDate());
+                statement.execute();
+
             }
 
         } catch (SQLException e) {

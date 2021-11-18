@@ -5,13 +5,13 @@ import java.util.ArrayList;
 
 public class SQLInputReader {
 
-    private static final String url = "jdbc:postgresql://localhost:5432/postgres";
-    private static final String user = "postgres";
-    private static final String password = "vb484732";
+//    private static final String url = "secret";
+//    private static final String user = "secret";
+//    private static final String password = "secret";
 
-//    private static final String url = "jdbc:postgresql://pg/studs";
-//    private static final String user = "s312421";
-//    private static final String password = "sdn516";
+    private static final String url = "secret";
+    private static final String user = "secret";
+    private static final String password = "secret";
 
     public ArrayList<PointBean> sqlCollect(ArrayList<PointBean> points) {
 
@@ -33,6 +33,7 @@ public class SQLInputReader {
                 points.add(point);
 
             }
+            System.out.println("All good");
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
