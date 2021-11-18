@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+<f:view>
+    <div id="header">
+        <h1>Бойко Владислав Алексеевич, Р3212, ВАРИАНТ: 12031</h1>
+    </div>
+    <h:outputLabel value="Hello, it's my starting page! Click here to open the main one! =>"/>
+<!--   <a href="index.xhtml">Go to main!</a>-->
+    <h:form>
+        <h:commandButton value="Go to main!" action="toMain"/>
+    </h:form>
+    <div id="time-node"></div>
+
+    <script type="text/javascript">
+        var timeNode = document.getElementById('time-node');
+        timeNode.innerHTML = getCurrentDateString() + " " + getCurrentTimeString();
+        function getCurrentTimeString() {
+            return new Date().toTimeString().replace(/ .*/, '');
+        }
+        function getCurrentDateString() {
+            return new Date().toDateString();
+        }
+
+        setInterval(
+            () => timeNode.innerHTML = getCurrentDateString() + " " + getCurrentTimeString(),
+            11000
+        );
+    </script>
+</f:view>
+</html>

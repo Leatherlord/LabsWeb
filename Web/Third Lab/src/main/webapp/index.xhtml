@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ace="http://www.icefaces.org/icefaces/components"
+      >
+
+
+<h:head>
+      <title>Third Lab Web</title>
+      <link href="style.css" rel="stylesheet" type="text/css"/>
+      <link href="gray-black_square_cut.jpg" rel="shortcut icon" type="image/jpg"/>
+</h:head>
+<h:body>
+   <div id="container">
+      <div id="header">
+         <h1>Бойко Владислав Алексеевич, Р3212, ВАРИАНТ: 12031</h1>
+         <h:form>
+            <h:commandButton value="Go to start!" action="toStart"/>
+         </h:form>
+
+      </div>
+      <div id="page">
+         <div id="content">
+            <div id="input-field">
+               <h2></h2>
+               <h3>Заполните форму ниже, пожалуйста:</h3>
+               <h:form id="toSend">
+                  <div>
+                     Координата Х:<br/>
+                     <h:selectOneMenu styleClass="X" id="X" value="#{containerBean.pointBean.x}">
+                        <f:selectItem itemValue="-3" itemLabel="-3"/>
+                        <f:selectItem itemValue="-2" itemLabel="-2"/>
+                        <f:selectItem itemValue="-1" itemLabel="-1"/>
+                        <f:selectItem itemValue="0" itemLabel="0"/>
+                        <f:selectItem itemValue="1" itemLabel="1"/>
+                        <f:selectItem itemValue="2" itemLabel="2"/>
+                        <f:selectItem itemValue="3" itemLabel="3"/>
+                        <f:selectItem itemValue="4" itemLabel="4"/>
+                        <f:selectItem itemValue="5" itemLabel="5"/>
+                     </h:selectOneMenu>
+                     <h:inputHidden value="#{containerBean.pointBean.x}"></h:inputHidden>
+                  </div>
+                  <div>
+                     Координата Y (-5...5):<br/>
+                     <h:inputText styleClass="Y" id="Y" value="#{containerBean.pointBean.y}"/>
+                  </div>
+                  <div>
+                     Параметр R:<br/>
+                     <ace:sliderEntry styleClass="R" id="R" axis="x" value="#{containerBean.pointBean.r}" min="2" max="5" showLabels="true" length="250px" stepPercent="8.33"/>
+                  </div>
+                  <div class="span"></div>
+                  <h:commandButton class="button" action="#{containerBean.addPoint}" value="Отправить">
+                     <f:ajax execute="toSend" render="the-only-table"/>
+                  </h:commandButton>
+               </h:form>
+            </div>
+            <div id="content-separator"></div>
+            <div id="ajax">
+               <h:panelGroup id="the-only-table">
+                  <h:dataTable value="#{containerBean.points}" var="point">
+                     <h:column>
+                        <f:facet name="header">X</f:facet>
+                        #{point.x}
+                     </h:column>
+
+                     <h:column>
+                        <f:facet name="header">Y</f:facet>
+                        #{point.y}
+                     </h:column>
+
+                     <h:column>
+                        <f:facet name="header">R</f:facet>
+                        #{point.r}
+                     </h:column>
+
+                     <h:column>
+                        <f:facet name="header">Result</f:facet>
+                        #{point.result}
+                     </h:column>
+
+                     <h:column>
+                        <f:facet name="header">Date</f:facet>
+                        #{point.date}
+                     </h:column>
+
+
+
+                  </h:dataTable>
+               </h:panelGroup>
+            </div>
+         </div>
+
+         <div id="sidebar">
+<!--            <a href="start.xhtml" >-->
+               <img id="duck" src="blue_rotate.jpg" alt="blue_rotate.jpg"/>
+<!--            </a>-->
+            <div id="field">
+               <img id="zone" src="red_field.png" alt="red_field.png"/>
+               <img id="pointer" src="gray-black_square_cut-removebg-preview(1).png"
+                    alt="gray-black_square_cut-removebg-preview(1).png"/>
+            </div>
+
+         </div>
+      </div>
+      <div class="clear">
+      </div>
+   </div>
+   <script src="script.js" type="text/javascript"></script>
+</h:body>
+</html>
