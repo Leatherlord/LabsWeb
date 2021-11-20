@@ -11,4 +11,10 @@
         <servlet-name>Faces Servlet</servlet-name>
         <url-pattern>*.xhtml</url-pattern>
     </servlet-mapping>
+<!--    <resource-ref>-->
+<!--        <res-ref-name>DataBase</res-ref-name>-->
+<!--        <res-type>javax.sql.DataSource</res-type>-->
+<!--        <res-auth>Container</res-auth>-->
+<!--        <mapped-name>PostgresDS</mapped-name>-->
+<!--    </resource-ref>-->
 </web-app>

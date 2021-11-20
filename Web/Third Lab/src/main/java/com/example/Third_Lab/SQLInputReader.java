@@ -1,28 +1,26 @@
 package com.example.Third_Lab;
 
+import javax.faces.bean.ApplicationScoped;
+import javax.faces.bean.ManagedProperty;
 import java.sql.*;
 import java.util.ArrayList;
 
+@javax.faces.bean.ManagedBean(name = "sQLInputReader")
+@ApplicationScoped
 public class SQLInputReader {
 
-//    private static final String url = "secret";
-//    private static final String user = "secret";
-//    private static final String password = "secret";
-
-    private static final String url = "secret";
-    private static final String user = "secret";
-    private static final String password = "secret";
+    @ManagedProperty(value = "#{sQLConnector}")
+    private SQLConnector connector;
 
     public ArrayList<PointBean> sqlCollect(ArrayList<PointBean> points) {
 
-        try (Connection con = new SQLConnector().connect(url, user, password);
+        try (Connection con = connector.getConnection();
              Statement stmt = con.createStatement();
              ResultSet rs = stmt.executeQuery("SELECT * FROM points")) {
             while (rs.next()) {
                 double x = rs.getDouble("X");
                 double y = rs.getDouble("Y");
                 double r = rs.getDouble("R");
-//                boolean result = rs.getBoolean("Result");
                 Timestamp date = rs.getTimestamp("Date");
 
                 PointBean point = new PointBean();
@@ -33,7 +31,7 @@ public class SQLInputReader {
                 points.add(point);
 
             }
-            System.out.println("All good");
+            System.out.println("Reading completed");
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
@@ -41,6 +39,12 @@ public class SQLInputReader {
         return points;
     }
 
+    public SQLConnector getConnector() {
+        return connector;
+    }
 
+    public void setConnector(SQLConnector connector) {
+        this.connector = connector;
+    }
 }
 

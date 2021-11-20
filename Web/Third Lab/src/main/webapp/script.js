@@ -1,20 +1,13 @@
-var inside = false
+let inside = false
 
 let input = document.querySelector(".Y")
 let span = document.querySelector(".span")
-let checkboxes = document.getElementsByClassName("checkbox")
 let pointer = document.querySelector("#pointer")
-let rRadio = document.getElementsByClassName("radio")
 let table = document.querySelector("#the-only-table")
 let form = document.getElementById("toSend")
 
-let x = document.querySelector("#X")
-
 document.querySelector("#field").onclick = function (e) {
     e.preventDefault()
-    // if (!isChecked(rRadio)) {
-    //     notValid(span, "Выберите R")
-    // } else {
         if (e.clientX < 293 && e.clientY < 590 && e.clientY > 303) {
             let r = (+ice.ace.instance("toSend:R").getValue())
             let xParent = 0;
@@ -29,10 +22,9 @@ document.querySelector("#field").onclick = function (e) {
             let xPos = Math.round((e.clientX - xParent - 143) * r / 96 * 100) / 100
             let yPos = Math.round(-(e.clientY - yParent - 143) * r / 96 * 100) / 100
 
-            let img = document.createElement("img")
-
             form.elements[4].value = xPos.toString()
             form.elements[5].value = yPos.toString()
+
             inside = true
 
             document.querySelector(".button").click()
@@ -42,27 +34,50 @@ document.querySelector("#field").onclick = function (e) {
             form.elements[4].value = 0
             form.elements[5].value = 0
 
-            img.src = "solana-circle.png"
-            img.style.height = 10 + "px"
-            img.style.width = 10 + "px"
-            img.style.left = (e.clientX - 5) + "px"
-            img.style.top = ((e.clientY - 64) - 5) + "px"
-            img.style.position = "absolute"
-
-            e.currentTarget.appendChild(img)
-
             pointer.style.left = (e.clientX - (pointer.clientWidth / 2)) + "px"
             pointer.style.top = ((e.clientY - 64) - (pointer.clientWidth / 2)) + "px"
-            console.log(xPos.toString(), " ", yPos.toString())
+    }
+}
 
-            // let formData = new FormData(form)
-            // formData.set("X[]", xPos.toString())
-            // formData.set("Y", yPos.toString())
-            // formData.set("ONLOAD", "false")
-            // sendRequest("POST", "controller-servlet", formData)
-            //     .then(addRow)
-            //     .catch(err => console.log(err));
-        // }
+
+
+function drawTheImg (data = null) {
+    console.log("aaa")
+    console.log(data.status)
+    if (data.status === "success") {
+        let tr = document.querySelector("tbody").lastElementChild
+        let tds = tr.children
+        let position = false
+        if (tds[3].innerText === "true") {
+            position = true
+        }
+        if (position) {
+            img.src = "green_circle.svg"
+        } else {
+            img.src = "red_circle.png"
+        }
+        let xPos = (+tds[0].innerText)
+        let yPos = (+tds[1].innerText)
+        let r = (+tds[2].innerText)
+
+        let xParent = 0;
+        let yParent = 0;
+        let parent = document.querySelector("#field")
+        while (parent) {
+            xParent += (parent.offsetLeft - parent.scrollLeft + parent.clientLeft);
+            yParent += (parent.offsetTop - parent.scrollTop + parent.clientTop);
+            parent = parent.offsetParent;
+        }
+        let clientX = (96 * xPos / r) + xParent + 143
+        let clientY = yParent + 143 - (96 * yPos / r)
+
+        img.style.height = 10 + "px"
+        img.style.width = 10 + "px"
+        img.style.left = (clientX - 5) + "px"
+        img.style.top = ((clientY - 64) - 5) + "px"
+        img.style.position = "absolute"
+
+        document.querySelector("#field").appendChild(img)
     }
 }
 

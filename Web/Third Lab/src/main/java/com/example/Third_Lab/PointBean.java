@@ -11,13 +11,9 @@ public class PointBean {
     private Timestamp date = new Timestamp(new Date().getTime());
 
     public boolean getResult() {
-        if ((X <= 0 && Y >= 0 && X >= -R/2 && Y <= R ) ||
-                (X >= 0 && Y >= 0 && Y <= -2*X + R) ||
-                (X >= 0 && Y <= 0 && (Math.pow(X, 2) + Math.pow(Y, 2) <= Math.pow(R, 2)) )
-        ) {
-            return true;
-        }
-        return false;
+        return (X <= 0 && Y >= 0 && X >= -R / 2 && Y <= R) ||
+                (X >= 0 && Y >= 0 && Y <= -2 * X + R) ||
+                (X >= 0 && Y <= 0 && (Math.pow(X, 2) + Math.pow(Y, 2) <= Math.pow(R, 2)));
     }
 
     public Timestamp getDate() {
@@ -32,8 +28,16 @@ public class PointBean {
         return Y;
     }
 
+    public void setY(double y) {
+        Y = y;
+    }
+
     public double getX() {
         return X;
+    }
+
+    public void setX(double x) {
+        X = x;
     }
 
     public double getR() {
@@ -42,13 +46,5 @@ public class PointBean {
 
     public void setR(double r) {
         R = r;
-    }
-
-    public void setY(double y) {
-        Y = y;
-    }
-
-    public void setX(double x) {
-        X = x;
     }
 }

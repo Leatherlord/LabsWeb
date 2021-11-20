@@ -53,7 +53,7 @@
                   </div>
                   <div class="span"></div>
                   <h:commandButton class="button" action="#{containerBean.addPoint}" value="Отправить">
-                     <f:ajax execute="toSend" render="the-only-table"/>
+                     <f:ajax execute="toSend" render="the-only-table" event="click" onevent="drawTheImg"/>
                   </h:commandButton>
                </h:form>
             </div>

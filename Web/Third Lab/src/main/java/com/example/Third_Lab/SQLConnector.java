@@ -1,18 +1,35 @@
 package com.example.Third_Lab;
 
+import javax.annotation.Resource;
+import javax.faces.bean.ApplicationScoped;
+import javax.faces.bean.ManagedBean;
+import javax.sql.DataSource;
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.SQLException;
 
+@ManagedBean(name = "sQLConnector")
+@ApplicationScoped
 public class SQLConnector {
-    public Connection connect(String url, String user, String password) {
-        Connection conn = null;
+
+    @Resource(lookup = "java:/PostgresDS")
+    private DataSource dataSource;
+
+
+    public Connection getConnection() {
         try {
-            conn = DriverManager.getConnection(url, user, password);
-            System.out.println("Connected to the PostgreSQL server successfully.");
-        } catch (SQLException e) {
-            System.out.println(e.getMessage());
+            return dataSource.getConnection();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+            return null;
         }
-        return conn;
+    }
+
+    public DataSource getDataSource() {
+        return dataSource;
+    }
+
+
+    public void setDataSource(DataSource dataSource) {
+        this.dataSource = dataSource;
     }
 }
