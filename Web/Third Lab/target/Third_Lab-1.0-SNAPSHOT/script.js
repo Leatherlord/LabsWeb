@@ -110,10 +110,13 @@ function drawTheImg(tr) {
 }
 
 document.querySelector(".button").onclick = function (e) {
-    if (!isNumber(input.value) || Math.abs(+input.value) > 5 || input.value === "") {
+    if (!isNumber(input.value) || input.value === "") {
+        e.preventDefault()
+        notValid(span, "Введите число")
+    } else if (!inside && Math.abs(+input.value) > 5) {
         e.preventDefault()
         notValid(span, "Введите число от -5 до 5")
-    } else {
+    } else{
         valid(span, "")
         if (!inside) {
             form.elements[4].value = form.elements[3].value
