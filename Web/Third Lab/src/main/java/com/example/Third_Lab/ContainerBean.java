@@ -20,6 +20,7 @@ public class ContainerBean {
 
     private ArrayList<PointBean> points;
 
+
     public void addPoint() {
         if (points == null) {
             points = reader.sqlCollect(new ArrayList<>());
@@ -33,15 +34,15 @@ public class ContainerBean {
         return pointBean;
     }
 
-    public void setPointBean(PointBean pointBean) {
-        this.pointBean = pointBean;
-    }
-
     public ArrayList<PointBean> getPoints() {
         if (points == null) {
             points = reader.sqlCollect(new ArrayList<>());
         }
         return points;
+    }
+
+    public void setPointBean(PointBean pointBean) {
+        this.pointBean = pointBean;
     }
 
     public void setPoints(ArrayList<PointBean> points) {

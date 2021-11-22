@@ -1,15 +1,18 @@
 let inside = false
-
 let input = document.querySelector(".Y")
 let span = document.querySelector(".span")
 let pointer = document.querySelector("#pointer")
 let table = document.querySelector("#the-only-table")
 let form = document.getElementById("toSend")
 
+function onChangeR() {
+    console.log("aaa")
+}
+
 document.querySelector("#field").onclick = function (e) {
     e.preventDefault()
         if (e.clientX < 293 && e.clientY < 590 && e.clientY > 303) {
-            let r = (+ice.ace.instance("toSend:R").getValue())
+            let r = form.elements[6].value
             let xParent = 0;
             let yParent = 0;
             let parent = e.currentTarget
@@ -40,11 +43,25 @@ document.querySelector("#field").onclick = function (e) {
 }
 
 
+let target = document.querySelector("#the-only-table")
 
-function drawTheImg (data) {
-    console.log(data.status)
-    if (data.status === "success") {
-        let tr = document.querySelector("tbody").lastElementChild
+let config = {
+    childList: true
+}
+
+function callback(mutationList, observer) {
+    let tr = document.querySelector("tbody").lastElementChild
+    drawTheImg(tr)
+}
+
+let observer = new MutationObserver(callback)
+observer.observe(target, config)
+
+
+
+
+function drawTheImg (tr) {
+        let img = document.createElement("img")
         let tds = tr.children
         let position = false
         if (tds[3].innerText === "true") {
@@ -77,7 +94,6 @@ function drawTheImg (data) {
         img.style.position = "absolute"
 
         document.querySelector("#field").appendChild(img)
-    }
 }
 
 document.querySelector(".button").onclick = function (e) {
@@ -89,6 +105,7 @@ document.querySelector(".button").onclick = function (e) {
         if (!inside) {
             form.elements[4].value = form.elements[3].value
         }
+        form.elements[7].value = form.elements[6].value
     }
 }
 

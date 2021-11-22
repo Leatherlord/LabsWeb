@@ -3,7 +3,7 @@
         "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://java.sun.com/jsf/html"
-      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
       xmlns:ace="http://www.icefaces.org/icefaces/components"
       >
 
@@ -30,7 +30,7 @@
                <h:form id="toSend">
                   <div>
                      Координата Х:<br/>
-                     <h:selectOneMenu styleClass="X" id="X" value="#{containerBean.pointBean.x}">
+                     <h:selectOneMenu id="X" value="#{containerBean.pointBean.x}">
                         <f:selectItem itemValue="-3" itemLabel="-3"/>
                         <f:selectItem itemValue="-2" itemLabel="-2"/>
                         <f:selectItem itemValue="-1" itemLabel="-1"/>
@@ -41,7 +41,7 @@
                         <f:selectItem itemValue="4" itemLabel="4"/>
                         <f:selectItem itemValue="5" itemLabel="5"/>
                      </h:selectOneMenu>
-                     <h:inputHidden value="#{containerBean.pointBean.x}"></h:inputHidden>
+                     <h:inputHidden styleClass="X" value="#{containerBean.pointBean.x}"></h:inputHidden>
                   </div>
                   <div>
                      Координата Y (-5...5):<br/>
@@ -49,11 +49,12 @@
                   </div>
                   <div>
                      Параметр R:<br/>
-                     <ace:sliderEntry styleClass="R" id="R" axis="x" value="#{containerBean.pointBean.r}" min="2" max="5" showLabels="true" length="250px" stepPercent="8.33"/>
+                     <ace:sliderEntry id="R" axis="x" value="2" min="2" max="5" length="250px" showLabels="true" />
+                     <h:inputHidden styleClass="R" value="#{containerBean.pointBean.r}"></h:inputHidden>
                   </div>
                   <div class="span"></div>
                   <h:commandButton class="button" action="#{containerBean.addPoint}" value="Отправить">
-                     <f:ajax execute="toSend" render="the-only-table" event="click" onevent="drawTheImg"/>
+                     <f:ajax execute="toSend" render="the-only-table" onevent="drawTheImg"/>
                   </h:commandButton>
                </h:form>
             </div>

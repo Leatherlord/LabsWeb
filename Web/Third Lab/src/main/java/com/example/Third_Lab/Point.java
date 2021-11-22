@@ -2,19 +2,24 @@ package com.example.Third_Lab;
 
 
 import java.sql.Timestamp;
-import java.util.Date;
 
-
-public class PointBean {
+public class Point {
     private double X;
     private double Y;
     private double R;
-    private Timestamp date = new Timestamp(new Date().getTime());
+    private Timestamp date;
+    private boolean result;
 
-    public boolean getResult() {
-        return (X <= 0 && Y >= 0 && X >= -R / 2 && Y <= R) ||
-                (X >= 0 && Y >= 0 && Y <= -2 * X + R) ||
-                (X >= 0 && Y <= 0 && (Math.pow(X, 2) + Math.pow(Y, 2) <= Math.pow(R, 2)));
+
+    public Point() {
+    }
+
+    public boolean isResult() {
+        return result;
+    }
+
+    public void setResult(boolean result) {
+        this.result = result;
     }
 
     public Timestamp getDate() {
