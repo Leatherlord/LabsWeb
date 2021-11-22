@@ -1,7 +1,5 @@
 package com.example.Third_Lab;
 
-import org.postgresql.ds.common.BaseDataSource;
-
 import javax.annotation.Resource;
 import javax.faces.bean.ApplicationScoped;
 import javax.faces.bean.ManagedBean;

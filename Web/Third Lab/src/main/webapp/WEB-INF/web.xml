@@ -1,5 +1,5 @@
-<web-app version="2.5"
-         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         version="2.5"
          xsi:schemalocation=" http://java.sun.com/xml/ns/javaee
          http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd">
     <servlet>
@@ -11,10 +11,9 @@
         <servlet-name>Faces Servlet</servlet-name>
         <url-pattern>*.xhtml</url-pattern>
     </servlet-mapping>
-<!--    <resource-ref>-->
-<!--        <res-ref-name>DataBase</res-ref-name>-->
-<!--        <res-type>javax.sql.DataSource</res-type>-->
-<!--        <res-auth>Container</res-auth>-->
-<!--        <mapped-name>PostgresDS</mapped-name>-->
-<!--    </resource-ref>-->
+    
+    <welcome-file-list>
+        <welcome-file>start.xhtml</welcome-file>
+    </welcome-file-list>
+
 </web-app>
