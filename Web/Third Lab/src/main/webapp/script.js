@@ -16,7 +16,8 @@ document.querySelector("a[role=\"slider\"]").onclick = function (e) {
     let trs = tbody.children
     for (let tr of trs) {
         let tds = tr.children
-        if (Math.round(parseFloat(tds[2].innerText) * 100) / 100 === R) {
+        if (Math.round(parseFloat(tds[2].innerText) * 100) / 100 === R && Math.abs(parseFloat(tds[0].innerText)) < 1.5*R &&
+            Math.abs(parseFloat(tds[1].innerText)) < 1.5*R) {
             drawTheImg(tr)
         }
     }
@@ -61,7 +62,11 @@ let config = {
 
 function callback() {
     let tr = document.querySelector("tbody").lastElementChild
-    drawTheImg(tr)
+    let tds = tr.children
+    if (Math.abs(parseFloat(tds[0].innerText)) < 1.5*R &&
+        Math.abs(parseFloat(tds[1].innerText)) < 1.5*R) {
+        drawTheImg(tr)
+    }
 }
 
 let observer = new MutationObserver(callback)
