@@ -1,0 +1,27 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+
+    <class name="msg.ejb.PointsEntity" table="points" schema="public" catalog="postgres">
+        <id name="id">
+            <column name="id" sql-type="integer" precision="0"/>
+        </id>
+        <property name="x">
+            <column name="x" sql-type="double precision" precision="-1"/>
+        </property>
+        <property name="y">
+            <column name="y" sql-type="double precision" precision="-1"/>
+        </property>
+        <property name="r">
+            <column name="r" sql-type="double precision" precision="-1"/>
+        </property>
+        <property name="result">
+            <column name="result" sql-type="boolean"/>
+        </property>
+        <property name="date">
+            <column name="date" sql-type="timestamp"/>
+        </property>
+    </class>
+</hibernate-mapping>
