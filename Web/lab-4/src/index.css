@@ -1,0 +1,144 @@
+body {
+  margin: 0;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+@font-face {
+  font-family: 'Montserrat Black';
+  src: url('./resources/Montserrat-Black.eot');
+  src: url('./resources/Montserrat-Black.eot?#iefix') format('embedded-opentype'),
+  url('./resources/Montserrat-Black.woff') format('woff'),
+  url('./resources/Montserrat-Black.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+
+body {
+  background: #FFF;
+  color: black;
+  font-family: 'Montserrat Black', serif;
+  font-size: 20px;
+  text-align: center;
+  width: 100%;
+  height: 0;
+  margin: 0;
+}
+
+input {
+  margin: 0.5%;
+}
+
+#header {
+  position: fixed;
+  background: #000000;
+  height: 64px;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+}
+
+#header + #page {
+  margin-top: 64px;
+}
+
+h1 {
+  color: #FFFFFF;
+  font-family: fantasy;
+  font-size: small;
+  padding-bottom: 14px;
+  padding-right: 17px;
+  padding-top: 15px;
+  text-align: center;
+  margin-top: 2px;
+}
+
+h1:first-letter {
+  color: #EC1946;
+  font-size: medium;
+}
+
+
+#container {
+  background: #cfd9de;
+  text-align: center;
+  width: 100%;
+  height: 0;
+  margin: auto;
+}
+
+#content {
+  background: url("./resources/Pattern 2.svg");
+  background-size: 100%;
+  margin: auto;
+  width: 100%;
+  height: 100%;
+}
+
+#input-field {
+  margin: auto;
+  height: fit-content;
+  width: fit-content;
+  background-color: white;
+  border-radius: 10px;
+  border: 6px groove #1e51a4;
+}
+
+#ajax {
+  margin: auto;
+  min-height: calc(100vh - 525px);
+  min-width: fit-content;
+  width: fit-content;
+  background-color: white;
+  border-radius: 10px;
+  border: 6px groove #1e51a4;
+}
+
+#the-only-table {
+  width: fit-content;
+}
+
+tr:nth-child(even) {
+  background-color: #f2f2f2;
+}
+
+th, td {
+  border-bottom: 1px solid #ddd;
+}
+
+#field {
+  margin: auto;
+  height: auto;
+  width: 288px;
+  background-color: white;
+  border-radius: 10px;
+  border: 6px groove #1e51a4;
+}
+
+#zone {
+  height: 288px;
+  width: 288px;
+}
+
+[type=button] {
+  background-color: #EC1946;
+  border: 4px groove #3b3b3b;
+  border-radius: 10px;
+  color: white;
+  font-family: "Montserrat Black", serif;
+}
+
+[type=submit] {
+  font-size: large !important;
+  background-color: #EC1946 !important;
+  border: 4px groove #3b3b3b !important;
+  border-radius: 10px !important;
+  color: white !important;
+  font-family: "Montserrat Black", serif !important;
+  text-transform: none !important;
+}
+
+
+
