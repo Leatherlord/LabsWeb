@@ -1,0 +1,14 @@
+<component name="ArtifactManager">
+  <artifact type="war" name="guide-rest-client-reactjs:war">
+    <output-path>$PROJECT_DIR$/target</output-path>
+    <properties id="maven-jee-properties">
+      <options>
+        <module>guide-rest-client-reactjs</module>
+        <packaging>war</packaging>
+      </options>
+    </properties>
+    <root id="archive" name="guide-rest-client-reactjs.war">
+      <element id="artifact" artifact-name="guide-rest-client-reactjs:war exploded" />
+    </root>
+  </artifact>
+</component>

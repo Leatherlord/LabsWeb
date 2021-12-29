@@ -6,9 +6,11 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
+        <module name="guide-rest-client-reactjs" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
+      <module name="guide-rest-client-reactjs" target="1.8" />
       <module name="mvn" target="1.5" />
     </bytecodeTargetLevel>
   </component>
