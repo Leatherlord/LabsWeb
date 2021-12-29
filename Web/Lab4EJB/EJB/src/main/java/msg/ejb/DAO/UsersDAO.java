@@ -1,49 +1,41 @@
 package msg.ejb.DAO;
 
-import msg.ejb.Factory.HibernateSessionFactoryUtil;
-import msg.ejb.UsersEntity;
-import org.hibernate.Session;
-import org.hibernate.Transaction;
 
+import msg.ejb.UsersEntity;
+
+import javax.annotation.Resource;
+import javax.ejb.Stateless;
+import javax.ejb.TransactionManagement;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
+import javax.transaction.UserTransaction;
 import java.util.List;
 
+@Stateless
+@TransactionManagement(javax.ejb.TransactionManagementType.BEAN)
 public class UsersDAO {
 
-    public UsersEntity findById(long id) {
-        Session session = HibernateSessionFactoryUtil.getSessionFactory().openSession();
-        UsersEntity user = session.get(UsersEntity.class, id);
-        session.close();
-        return user;
+    @PersistenceContext(unitName = "postgres")
+    private EntityManager em;
+
+    @Resource
+    private UserTransaction userTransaction;
+
+    public void save(UsersEntity user) throws Exception {
+        userTransaction.begin();
+        em.persist(user);
+        userTransaction.commit();
     }
 
-    public void save(UsersEntity user) {
-        Session session = HibernateSessionFactoryUtil.getSessionFactory().openSession();
-        Transaction tx1 = session.beginTransaction();
-        session.save(user);
-        tx1.commit();
-        session.close();
-    }
-
-    public void update(UsersEntity user) {
-        Session session = HibernateSessionFactoryUtil.getSessionFactory().openSession();
-        Transaction tx1 = session.beginTransaction();
-        session.update(user);
-        tx1.commit();
-        session.close();
-    }
-
-    public void delete(UsersEntity user) {
-        Session session = HibernateSessionFactoryUtil.getSessionFactory().openSession();
-        Transaction tx1 = session.beginTransaction();
-        session.delete(user);
-        tx1.commit();
-        session.close();
+    public void delete(UsersEntity user) throws Exception {
+        userTransaction.begin();
+        em.remove(em.merge(user));
+        userTransaction.commit();
     }
 
     public List<UsersEntity> findAll() {
-        Session session = HibernateSessionFactoryUtil.getSessionFactory().openSession();
-        List<UsersEntity> users = (List<UsersEntity>) session.createQuery("From UsersEntity").list();
-        session.close();
-        return users;
+        Query query = em.createQuery("SELECT u from UsersEntity u");
+        return query.getResultList();
     }
 }

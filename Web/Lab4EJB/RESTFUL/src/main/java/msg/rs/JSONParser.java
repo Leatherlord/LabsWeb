@@ -17,11 +17,6 @@ public class JSONParser {
                     json.append(toJSON(collection.get(i))).append("\n");
                 }
             }
-        } else {
-            json.append("   {\n" +
-                    "       \"result\": \"none\",\n" +
-                    "       \"message\": \"\"\n" +
-                    "}\n");
         }
         json.append("]");
         return json.toString();

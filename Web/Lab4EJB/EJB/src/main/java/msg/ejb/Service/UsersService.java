@@ -3,29 +3,30 @@ package msg.ejb.Service;
 import msg.ejb.DAO.UsersDAO;
 import msg.ejb.UsersEntity;
 
+import javax.ejb.EJB;
+import javax.ejb.Singleton;
 import java.util.ArrayList;
 
+@Singleton
 public class UsersService {
 
-    private final UsersDAO usersDao = new UsersDAO();
-
-    public UsersService() {
-    }
-
-    public UsersEntity findUser(long id) {
-        return usersDao.findById(id);
-    }
+    @EJB
+    private UsersDAO usersDao;
 
     public void saveUser(UsersEntity user) {
-        usersDao.save(user);
+        try {
+            usersDao.save(user);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     public void deleteUser(UsersEntity user) {
-        usersDao.delete(user);
-    }
-
-    public void updateUser(UsersEntity user) {
-        usersDao.update(user);
+        try {
+            usersDao.delete(user);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     public ArrayList<UsersEntity> findAllUsers() {

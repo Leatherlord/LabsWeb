@@ -3,43 +3,55 @@ package msg.ejb;
 import msg.ejb.Service.PointsService;
 import msg.ejb.Service.UsersService;
 
+import javax.ejb.EJB;
 import javax.ejb.Singleton;
 import javax.ejb.TransactionManagement;
 import javax.ejb.TransactionManagementType;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.stream.Collectors;
 
 
 @Singleton
 @TransactionManagement(value= TransactionManagementType.BEAN)
 public class ControllerBean {
 
-    private final ArrayList<UsersEntity> users;
-    private final ArrayList<PointsEntity> points;
+    @EJB
+    private PointsService pointsService;
 
-    {
-        users = new UsersService().findAllUsers();
-        points = new PointsService().findAllPoints();
-    }
+    @EJB
+    private UsersService usersService;
 
-    public void addPoint(PointsEntity point) {
+    public void addPoint(PointsEntity point, String login) {
         point.setResult(isInArea(point));
         point.setDate(new Timestamp(new Date().getTime()));
-        points.add(point);
-        new PointsService().savePoint(point);
+        for (UsersEntity user: getUsers()) {
+            if (user.getLogin().equals(login)) {
+                point.setUser_id(user);
+            }
+        }
+        pointsService.savePoint(point);
     }
 
-    public ArrayList<PointsEntity> getPoints() {
-        return points;
+    public void addUser(UsersEntity user){
+        usersService.saveUser(user);
+    }
+
+    public ArrayList<PointsEntity> getPoints(String login) {
+        return (ArrayList<PointsEntity>) pointsService
+                .findAllPoints()
+                .stream()
+                .filter(item -> item.getUser_id().getLogin().equals(login))
+                .collect(Collectors.toList());
     }
 
     public ArrayList<UsersEntity> getUsers() {
-        return users;
+        return usersService.findAllUsers();
     }
 
     public boolean isRegistered(String login, String password) {
-        for (UsersEntity user : users) {
+        for (UsersEntity user : usersService.findAllUsers()) {
             if (user.getLogin().equals(login) && user.getPassword().equals(password)) {
                 return true;
             }

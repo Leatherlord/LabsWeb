@@ -1,49 +1,40 @@
 package msg.ejb.DAO;
 
-import msg.ejb.Factory.HibernateSessionFactoryUtil;
 import msg.ejb.PointsEntity;
-import org.hibernate.Session;
-import org.hibernate.Transaction;
 
+import javax.annotation.Resource;
+import javax.ejb.Singleton;
+import javax.ejb.TransactionManagement;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
+import javax.transaction.UserTransaction;
 import java.util.List;
 
+@Singleton
+@TransactionManagement(javax.ejb.TransactionManagementType.BEAN)
 public class PointsDAO {
 
-    public PointsEntity findById(long id) {
-        Session session = HibernateSessionFactoryUtil.getSessionFactory().openSession();
-        PointsEntity pointsEntity = session.get(PointsEntity.class, id);
-        session.close();
-        return pointsEntity;
+    @PersistenceContext(unitName = "postgres")
+    private EntityManager em;
+
+    @Resource
+    private UserTransaction userTransaction;
+
+    public void save(PointsEntity pointsEntity) throws Exception {
+        userTransaction.begin();
+        em.persist(pointsEntity);
+        userTransaction.commit();
     }
 
-    public void save(PointsEntity pointsEntity) {
-        Session session = HibernateSessionFactoryUtil.getSessionFactory().openSession();
-        Transaction tx1 = session.beginTransaction();
-        session.save(pointsEntity);
-        tx1.commit();
-        session.close();
-    }
-
-    public void update(PointsEntity pointsEntity) {
-        Session session = HibernateSessionFactoryUtil.getSessionFactory().openSession();
-        Transaction tx1 = session.beginTransaction();
-        session.update(pointsEntity);
-        tx1.commit();
-        session.close();
-    }
-
-    public void delete(PointsEntity pointsEntity) {
-        Session session = HibernateSessionFactoryUtil.getSessionFactory().openSession();
-        Transaction tx1 = session.beginTransaction();
-        session.delete(pointsEntity);
-        tx1.commit();
-        session.close();
+    public void delete(PointsEntity pointsEntity) throws Exception {
+        userTransaction.begin();
+        em.remove(em.merge(pointsEntity));
+        userTransaction.commit();
     }
 
     public List<PointsEntity> findAll() {
-        Session session = HibernateSessionFactoryUtil.getSessionFactory().openSession();
-        List<PointsEntity> points = (List<PointsEntity>) session.createQuery("From PointsEntity").list();
-        session.close();
-        return points;
+        Query query = em.createQuery("SELECT p from PointsEntity p");
+        return query.getResultList();
     }
 }

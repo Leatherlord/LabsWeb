@@ -5,9 +5,12 @@
          version="2.4">
 
     <display-name>create-react-app-servlet</display-name>
-
     <error-page>
         <error-code>404</error-code>
+        <location>/src/main/resources/index.html</location>
+    </error-page>
+    <error-page>
+        <error-code>403</error-code>
         <location>/src/main/resources/index.html</location>
     </error-page>
 

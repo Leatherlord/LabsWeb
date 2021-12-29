@@ -3,29 +3,31 @@ package msg.ejb.Service;
 import msg.ejb.DAO.PointsDAO;
 import msg.ejb.PointsEntity;
 
+import javax.ejb.EJB;
+import javax.ejb.Singleton;
 import java.util.ArrayList;
 
+@Singleton
 public class PointsService {
 
-    private final PointsDAO pointsDAO = new PointsDAO();
-
-    public PointsService() {
-    }
-
-    public PointsEntity findPoint(long id) {
-        return pointsDAO.findById(id);
-    }
+    @EJB
+    private PointsDAO pointsDAO;
 
     public void savePoint(PointsEntity pointsEntity) {
-        pointsDAO.save(pointsEntity);
+        try {
+            pointsDAO.save(pointsEntity);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     public void deletePoint(PointsEntity pointsEntity) {
-        pointsDAO.delete(pointsEntity);
-    }
+        try {
+            pointsDAO.delete(pointsEntity);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
-    public void updatePoint(PointsEntity pointsEntity) {
-        pointsDAO.update(pointsEntity);
     }
 
     public ArrayList<PointsEntity> findAllPoints() {

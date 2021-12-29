@@ -6,13 +6,12 @@
     <session-factory>
         <property name="connection.url">jdbc:postgresql://localhost:5432/postgres</property>
         <property name="connection.driver_class">org.postgresql.Driver</property>
-<!--        <property name="connection.username">postgres</property>-->
-<!--        <property name="connection.password">vb484732</property>-->
         <property name="connection.datasource">java:/PostgresDS</property>
-        <mapping resource="PointsEntity.hbm.xml"/>
         <mapping class="msg.ejb.PointsEntity"/>
         <mapping class="msg.ejb.UsersEntity"/>
-        <mapping resource="UsersEntity.hbm.xml"/>
+        <!-- <property name="connection.username"/> -->
+        <!-- <property name="connection.password"/> -->
+
         <!-- DB schema will be updated if needed -->
         <!-- <property name="hibernate.hbm2ddl.auto">update</property> -->
     </session-factory>

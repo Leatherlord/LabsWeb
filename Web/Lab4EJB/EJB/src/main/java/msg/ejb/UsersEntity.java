@@ -1,15 +1,26 @@
 package msg.ejb;
 
 import javax.persistence.*;
-import java.util.Objects;
 
 @Entity
 @Table(name = "users")
 public class UsersEntity {
+    private int id;
     private String login;
     private String password;
 
     @Id
+    @GeneratedValue
+    @Column(name = "id", nullable = false)
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    @Basic
     @Column(name = "login", nullable = false, length = -1)
     public String getLogin() {
         return login;
@@ -33,12 +44,21 @@ public class UsersEntity {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
+
         UsersEntity that = (UsersEntity) o;
-        return Objects.equals(login, that.login) && Objects.equals(password, that.password);
+
+        if (id != that.id) return false;
+        if (login != null ? !login.equals(that.login) : that.login != null) return false;
+        if (password != null ? !password.equals(that.password) : that.password != null) return false;
+
+        return true;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(login, password);
+        int result = id;
+        result = 31 * result + (login != null ? login.hashCode() : 0);
+        result = 31 * result + (password != null ? password.hashCode() : 0);
+        return result;
     }
 }
