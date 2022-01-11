@@ -34,6 +34,11 @@ public class UsersDAO {
         userTransaction.commit();
     }
 
+    public UsersEntity findByLogin(String login) {
+        return (UsersEntity) em.createQuery("select u from UsersEntity u where u.login = :login")
+                .setParameter("login", login).getResultList().get(0);
+    }
+
     public List<UsersEntity> findAll() {
         Query query = em.createQuery("SELECT u from UsersEntity u");
         return query.getResultList();

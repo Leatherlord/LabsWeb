@@ -13,20 +13,16 @@ public class UsersService {
     @EJB
     private UsersDAO usersDao;
 
-    public void saveUser(UsersEntity user) {
-        try {
+    public void saveUser(UsersEntity user) throws Exception {
             usersDao.save(user);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
     }
 
-    public void deleteUser(UsersEntity user) {
-        try {
+    public void deleteUser(UsersEntity user) throws Exception {
             usersDao.delete(user);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+    }
+
+    public UsersEntity findByLogin(String login) throws IndexOutOfBoundsException {
+        return usersDao.findByLogin(login);
     }
 
     public ArrayList<UsersEntity> findAllUsers() {

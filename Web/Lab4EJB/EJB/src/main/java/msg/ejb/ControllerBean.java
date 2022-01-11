@@ -10,7 +10,6 @@ import javax.ejb.TransactionManagementType;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.stream.Collectors;
 
 
 @Singleton
@@ -23,27 +22,23 @@ public class ControllerBean {
     @EJB
     private UsersService usersService;
 
-    public void addPoint(PointsEntity point, String login) {
+    public void addPoint(PointsEntity point, String login) throws Exception {
         point.setResult(isInArea(point));
         point.setDate(new Timestamp(new Date().getTime()));
-        for (UsersEntity user: getUsers()) {
-            if (user.getLogin().equals(login)) {
-                point.setUser_id(user);
-            }
-        }
+        point.setUser_id(usersService.findByLogin(login));
         pointsService.savePoint(point);
     }
 
-    public void addUser(UsersEntity user){
+    public void addUser(UsersEntity user) throws Exception {
         usersService.saveUser(user);
     }
 
     public ArrayList<PointsEntity> getPoints(String login) {
-        return (ArrayList<PointsEntity>) pointsService
-                .findAllPoints()
-                .stream()
-                .filter(item -> item.getUser_id().getLogin().equals(login))
-                .collect(Collectors.toList());
+        try {
+            return (ArrayList<PointsEntity>) pointsService.findByUser(usersService.findByLogin(login));
+        } catch (Exception e) {
+            return new ArrayList<>();
+        }
     }
 
     public ArrayList<UsersEntity> getUsers() {
@@ -51,12 +46,12 @@ public class ControllerBean {
     }
 
     public boolean isRegistered(String login, String password) {
-        for (UsersEntity user : usersService.findAllUsers()) {
-            if (user.getLogin().equals(login) && user.getPassword().equals(password)) {
-                return true;
-            }
+        try {
+            boolean value = usersService.findByLogin(login).getPassword().equals(password);
+            return value;
+        } catch (Exception e) {
+            return false;
         }
-        return false;
     }
 
     private boolean isInArea(PointsEntity pointsEntity) {

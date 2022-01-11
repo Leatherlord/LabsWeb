@@ -25,25 +25,10 @@ public class AuthorizationResource {
     @Consumes(MediaType.MULTIPART_FORM_DATA)
     public Response authorize(Map<String, String> data) {
         if (controller.isRegistered(data.get("login"), Hashing.sha256().hashString(data.get("password"), StandardCharsets.UTF_8).toString())) {
-            ArrayList<PointsEntity> result = new ArrayList<>();
-            PointsEntity tech = new PointsEntity();
-            tech.setResult(true);
-            result.add(tech);
             return Response.ok()
-                    .header("Access-Control-Allow-Origin", "*")
-                    .header("Access-Control-Allow-Headers", "origin, content-type, accept, authorization")
-                    .header("Access-Control-Allow-Credentials", "true")
-                    .header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS, HEAD")
-                    .header("Access-Control-Max-Age", "1209600")
-                    .entity(JSONParser.toJSON(result))
                     .build();
         } else {
-            return Response.serverError()
-                    .header("Access-Control-Allow-Origin", "*")
-                    .header("Access-Control-Allow-Headers", "origin, content-type, accept, authorization")
-                    .header("Access-Control-Allow-Credentials", "true")
-                    .header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS, HEAD")
-                    .header("Access-Control-Max-Age", "1209600")
+            return Response.status(403)
                     .entity("Authorization Failed")
                     .build();
         }

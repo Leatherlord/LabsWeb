@@ -1,6 +1,7 @@
 package msg.ejb.DAO;
 
 import msg.ejb.PointsEntity;
+import msg.ejb.UsersEntity;
 
 import javax.annotation.Resource;
 import javax.ejb.Singleton;
@@ -31,6 +32,12 @@ public class PointsDAO {
         userTransaction.begin();
         em.remove(em.merge(pointsEntity));
         userTransaction.commit();
+    }
+
+    public List<PointsEntity> findByUser(UsersEntity usersEntity) {
+        Query query = em.createQuery("SELECT p from PointsEntity p where p.user = :user", PointsEntity.class)
+                .setParameter("user", usersEntity);
+        return query.getResultList();
     }
 
     public List<PointsEntity> findAll() {

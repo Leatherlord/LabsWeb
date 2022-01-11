@@ -35,23 +35,21 @@ public class PointsResource {
             point.setX(x);
             point.setY(y);
             point.setR(r);
-            controller.addPoint(point, data.get("login"));
-            result.add(point);
-            return Response.ok()
-                    .header("Access-Control-Allow-Origin", "*")
-                    .header("Access-Control-Allow-Headers", "origin, content-type, accept, authorization")
-                    .header("Access-Control-Allow-Credentials", "true")
-                    .header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS, HEAD")
-                    .header("Access-Control-Max-Age", "1209600")
-                    .entity(JSONParser.toJSON(result))
-                    .build();
+            try {
+                controller.addPoint(point, data.get("login"));
+                result.add(point);
+                return Response.ok()
+                        .entity(JSONParser.toJSON(result))
+                        .build();
+            } catch (Exception e) {
+                e.printStackTrace();
+                return Response.serverError()
+                        .entity("Could not add a point")
+                        .build();
+            }
+
         } else {
-            return Response.serverError()
-                    .header("Access-Control-Allow-Origin", "*")
-                    .header("Access-Control-Allow-Headers", "origin, content-type, accept, authorization")
-                    .header("Access-Control-Allow-Credentials", "true")
-                    .header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS, HEAD")
-                    .header("Access-Control-Max-Age", "1209600")
+            return Response.status(403)
                     .entity("User is not confirmed")
                     .build();
         }
@@ -63,20 +61,10 @@ public class PointsResource {
     public Response getAllPoints(Map<String, String> data) {
         if (controller.isRegistered(data.get("login"), Hashing.sha256().hashString(data.get("password"), StandardCharsets.UTF_8).toString())) {
             return Response.ok()
-                    .header("Access-Control-Allow-Origin", "*")
-                    .header("Access-Control-Allow-Headers", "origin, content-type, accept, authorization")
-                    .header("Access-Control-Allow-Credentials", "true")
-                    .header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS, HEAD")
-                    .header("Access-Control-Max-Age", "1209600")
                     .entity(JSONParser.toJSON(controller.getPoints(data.get("login"))))
                     .build();
         } else {
-            return Response.serverError()
-                    .header("Access-Control-Allow-Origin", "*")
-                    .header("Access-Control-Allow-Headers", "origin, content-type, accept, authorization")
-                    .header("Access-Control-Allow-Credentials", "true")
-                    .header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS, HEAD")
-                    .header("Access-Control-Max-Age", "1209600")
+            return Response.status(403)
                     .entity("User is not confirmed")
                     .build();
         }

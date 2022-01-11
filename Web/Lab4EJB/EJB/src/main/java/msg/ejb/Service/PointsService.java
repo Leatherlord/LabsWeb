@@ -2,10 +2,13 @@ package msg.ejb.Service;
 
 import msg.ejb.DAO.PointsDAO;
 import msg.ejb.PointsEntity;
+import msg.ejb.UsersEntity;
 
 import javax.ejb.EJB;
 import javax.ejb.Singleton;
+import javax.persistence.Query;
 import java.util.ArrayList;
+import java.util.List;
 
 @Singleton
 public class PointsService {
@@ -13,21 +16,16 @@ public class PointsService {
     @EJB
     private PointsDAO pointsDAO;
 
-    public void savePoint(PointsEntity pointsEntity) {
-        try {
+    public void savePoint(PointsEntity pointsEntity) throws Exception {
             pointsDAO.save(pointsEntity);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
     }
 
-    public void deletePoint(PointsEntity pointsEntity) {
-        try {
+    public void deletePoint(PointsEntity pointsEntity) throws Exception {
             pointsDAO.delete(pointsEntity);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+    }
 
+    public List<PointsEntity> findByUser(UsersEntity usersEntity) {
+        return pointsDAO.findByUser(usersEntity);
     }
 
     public ArrayList<PointsEntity> findAllPoints() {
