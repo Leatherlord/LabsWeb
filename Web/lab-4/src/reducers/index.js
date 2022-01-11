@@ -6,6 +6,7 @@ import dataReducer from "./dataReducer"
 import wantToRegReducer from "./wantToRegReducer";
 import userInfoReducer from "./userInfoReducer";
 import {combineReducers} from "redux"
+import stateReducer from "./stateReducer";
 
 const combinedReducer = combineReducers({
     isLogged: loggedReducer,
@@ -14,7 +15,8 @@ const combinedReducer = combineReducers({
     R: rReducer,
     data: dataReducer,
     wantReg: wantToRegReducer,
-    userInfo: userInfoReducer
+    userInfo: userInfoReducer,
+    state: stateReducer
 })
 
 export default combinedReducer;

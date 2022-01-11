@@ -17,6 +17,7 @@ import logOut from "./actions/callbacks/logOut";
 import clearData from "./actions/callbacks/clearData";
 import sendRequest from "./actions/sendRequest";
 import addData from "./actions/callbacks/addData";
+import setState from "./actions/callbacks/setState";
 
 
 function Main() {
@@ -26,6 +27,7 @@ function Main() {
     const R = useSelector(state => state.R)
     const data = useSelector(state => state.data)
     const userInfo = useSelector(state => state.userInfo);
+    const message = useSelector(state => state.state);
 
     let xOffset = 150;
     let yOffset = 150;
@@ -83,6 +85,7 @@ function Main() {
                                 <Button label="3" onClick={() => dispatch(setR(3))}/>
                                 <Button label="4" onClick={() => dispatch(setR(4))}/>
                             </div>
+                            {message}
                             <div><Button label="Отправить" onClick={() => {
                                 let data = new FormData();
                                 data.set("X", X);
@@ -92,9 +95,10 @@ function Main() {
                                 data.set("password", localStorage.getItem("password"));
                                 sendRequest("/points/add", data, dispatch).then(response => {
                                     if (response.ok) {
-                                        return response.json().then(point => dispatch(addData(point[0])));
+                                        return response.json().then(point => {dispatch(addData(point[0]));
+                                        dispatch(setState())});
                                     } else {
-                                        return response.text().then(text => alert(text));
+                                        return response.text().then(text => dispatch(setState(text)));
                                     }
                                 }).catch(err => console.log(err));
 
@@ -124,9 +128,10 @@ function Main() {
                             data.set("password", localStorage.getItem("password"));
                             sendRequest("/points/add", data, dispatch).then(response => {
                                 if (response.ok) {
-                                    return response.json().then(point => dispatch(addData(point[0])));
+                                    return response.json().then(point => {dispatch(addData(point[0]));
+                                    dispatch(setState())});
                                 } else {
-                                    return response.text().then(text => alert(text));
+                                    return response.text().then(text => dispatch(setState(text)));
                                 }
                             }).catch(err => console.log(err));
                         }

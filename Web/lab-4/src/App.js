@@ -5,6 +5,7 @@ import Main from "./Main";
 import sendRequest, {preparations} from "./actions/sendRequest";
 import logIn from "./actions/callbacks/logIn";
 import setData from "./actions/callbacks/setData";
+import setState from "./actions/callbacks/setState";
 
 
 function App() {
@@ -40,12 +41,13 @@ function App() {
                             dispatch(setData(taken));
                         });
                     } else {
-                        return response.text().then(text => alert(text));
+                        return response.text().then(text => dispatch(setState(text)));
                     }
                 });
+                dispatch(setState());
                 dispatch(logIn());
             } else {
-                return response.text().then(text => alert(text))
+                return response.text().then(text => dispatch(setState(text)))
             }
         }).catch(err => console.log(err));
 
