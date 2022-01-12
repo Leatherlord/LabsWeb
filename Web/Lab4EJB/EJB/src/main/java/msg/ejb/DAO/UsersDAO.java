@@ -35,8 +35,14 @@ public class UsersDAO {
     }
 
     public UsersEntity findByLogin(String login) {
-        return (UsersEntity) em.createQuery("select u from UsersEntity u where u.login = :login")
-                .setParameter("login", login).getResultList().get(0);
+        UsersEntity usersEntity;
+        try {
+            usersEntity = (UsersEntity) em.createQuery("select u from UsersEntity u where u.login = :login")
+                    .setParameter("login", login).getResultList().get(0);
+            return usersEntity;
+        } catch (IndexOutOfBoundsException e) {
+            return null;
+        }
     }
 
     public List<UsersEntity> findAll() {

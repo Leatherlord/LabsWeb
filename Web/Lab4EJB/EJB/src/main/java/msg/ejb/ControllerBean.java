@@ -34,11 +34,7 @@ public class ControllerBean {
     }
 
     public ArrayList<PointsEntity> getPoints(String login) {
-        try {
-            return (ArrayList<PointsEntity>) pointsService.findByUser(usersService.findByLogin(login));
-        } catch (Exception e) {
-            return new ArrayList<>();
-        }
+        return (ArrayList<PointsEntity>) pointsService.findByUser(usersService.findByLogin(login));
     }
 
     public ArrayList<UsersEntity> getUsers() {
@@ -46,12 +42,9 @@ public class ControllerBean {
     }
 
     public boolean isRegistered(String login, String password) {
-        try {
-            boolean value = usersService.findByLogin(login).getPassword().equals(password);
-            return value;
-        } catch (Exception e) {
-            return false;
-        }
+        UsersEntity user = usersService.findByLogin(login);
+        if (user != null) return user.getPassword().equals(password);
+        return false;
     }
 
     private boolean isInArea(PointsEntity pointsEntity) {

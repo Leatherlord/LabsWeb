@@ -25,7 +25,9 @@ public class PointsService {
     }
 
     public List<PointsEntity> findByUser(UsersEntity usersEntity) {
-        return pointsDAO.findByUser(usersEntity);
+        List<PointsEntity> list = pointsDAO.findByUser(usersEntity);
+        if (list != null) return pointsDAO.findByUser(usersEntity);
+        return new ArrayList<>();
     }
 
     public ArrayList<PointsEntity> findAllPoints() {
